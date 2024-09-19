@@ -3,16 +3,40 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    private EnemyPool enemyPool; // Referencia al pool de enemigos
+    [SerializeField] private ColorPalette colorPalette;
+    [SerializeField] private GameObject background;
+
+    private EnemyPool enemyPool;
+    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer backgroundRenderer;
 
     private void Start()
     {
-        // Obtener la referencia al pool de enemigos
         enemyPool = FindObjectOfType<EnemyPool>();
 
         if (enemyPool == null)
         {
             Debug.LogError("No se encontró EnemyPool en la escena.");
+        }
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer no encontrado en el GameObject.");
+        }
+        else
+        {
+            AssignRandomColor(spriteRenderer);
+        }
+
+        if (background != null)
+        {
+            backgroundRenderer = background.GetComponent<SpriteRenderer>();
+            if (backgroundRenderer == null)
+            {
+                Debug.LogError("SpriteRenderer no encontrado en el GameObject de fondo.");
+            }
         }
     }
 
@@ -25,10 +49,6 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Aquí puedes restar 1 de vida al jugador o realizar cualquier otra acción necesaria
-            Debug.Log("Enemigo impactó al jugador");
-
-            // Devolver el enemigo al pool
             if (enemyPool != null)
             {
                 enemyPool.ReturnEnemy(gameObject);
@@ -36,13 +56,31 @@ public class Enemy : MonoBehaviour
         }
         else if (other.CompareTag("Wall"))
         {
-            // El enemigo se destruye y se devuelve al pool
-            Debug.Log("Enemigo impactó una pared");
-
             if (enemyPool != null)
             {
                 enemyPool.ReturnEnemy(gameObject);
             }
+        }
+    }
+
+    private void AssignRandomColor(SpriteRenderer spriteRenderer)
+    {
+        if (colorPalette != null && colorPalette.Colors.Length > 0)
+        {
+            int randomIndex = Random.Range(0, colorPalette.Colors.Length);
+            spriteRenderer.color = colorPalette.Colors[randomIndex];
+
+            if (backgroundRenderer != null)
+            {
+                if (spriteRenderer.color == backgroundRenderer.color)
+                {
+                    Destroy(gameObject);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("ColorPalette no está asignado o está vacío.");
         }
     }
 }

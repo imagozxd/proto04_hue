@@ -32,34 +32,29 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        // Comprobar si se ha hecho clic en la pantalla
         if (Input.GetMouseButtonDown(0))
         {
-            // Realizar un raycast desde la posición del ratón
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
             // Dibujar el raycast en la escena
-            Debug.DrawRay(ray.origin, ray.direction * raycastDistance, Color.red, 2f); // Color rojo y duración de 2 segundos
+            Debug.DrawRay(ray.origin, ray.direction * raycastDistance, Color.red, 2f); 
 
-            // Verificar si el raycast ha golpeado algo
+            
             if (hit.collider != null)
             {
-                // Imprimir información sobre el objeto golpeado
                 Debug.Log($"Clic en objeto: {hit.collider.name}");
 
-                // Verificar si el objeto golpeado tiene el tag "paleta"
+                
                 if (hit.collider.CompareTag("paleta"))
                 {
-                    // Obtener el SpriteRenderer del objeto golpeado
                     SpriteRenderer hitSpriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
 
                     if (hitSpriteRenderer != null)
                     {
-                        // Asignar el color del SpriteRenderer golpeado al fondo
+                       
                         backgroundSpriteRenderer.color = hitSpriteRenderer.color;
 
-                        // Cambiar el color de la paleta a un color aleatorio del arreglo
                         AssignRandomColor(hitSpriteRenderer);
                     }
                 }

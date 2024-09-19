@@ -144,3 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  colorPalette: {fileID: 11400000, guid: bf03e93ef844eda44b94c32e47cc7abd, type: 2}

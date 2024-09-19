@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - paleta
+  - enemy
+  - Wall
   layers:
   - Default
   - TransparentFX

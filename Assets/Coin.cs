@@ -1,16 +1,28 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private float speed = 2f;
+
+    private void Update()
+    {
+        transform.Translate(Vector2.left * speed * Time.deltaTime);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Wall"))
         {
-            // Aquí puedes agregar lógica para sumar puntos, efectos, etc.
+            ObjectPoolCoins objectPoolCoins = FindObjectOfType<ObjectPoolCoins>();
 
-            // Devolver la moneda al pool
-            ObjectPoolCoins.Instance.ReturnCoin(gameObject);
+            if (objectPoolCoins != null)
+            {
+                objectPoolCoins.ReturnCoin(gameObject);
+            }
+            else
+            {
+                Debug.LogError("ObjectPoolCoins no encontrado en la escena.");
+            }
         }
     }
 }

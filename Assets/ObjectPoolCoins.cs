@@ -3,25 +3,13 @@ using UnityEngine;
 
 public class ObjectPoolCoins : MonoBehaviour
 {
-    public static ObjectPoolCoins Instance; // Instancia del pool
     [SerializeField] private GameObject coinPrefab; // Prefab de moneda
     [SerializeField] private int poolSize = 10; // Tamaño inicial del pool
 
     private Queue<GameObject> coinPool; // Cola para gestionar las monedas
 
-    private void Awake()
+    private void Start()
     {
-        // Implementar el patrón Singleton
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         InitializePool();
     }
 

@@ -63,7 +63,9 @@ public class GameController : MonoBehaviour
             {
                 Debug.Log("No se ha golpeado ningún objeto.");
             }
+            Debug.Log(GetBackgroundColorIndex());
         }
+
     }
 
     // Método para asignar un color aleatorio del ScriptableObject al SpriteRenderer
@@ -71,5 +73,20 @@ public class GameController : MonoBehaviour
     {
         int randomIndex = Random.Range(0, colorPalette.Colors.Length);
         spriteRenderer.color = colorPalette.Colors[randomIndex];
+    }
+
+    public int GetBackgroundColorIndex()
+    {
+        // Buscar en el array de colores cuál es el asignado actualmente
+        for (int i = 0; i < colorPalette.Colors.Length; i++)
+        {
+            if (backgroundSpriteRenderer.color == colorPalette.Colors[i])
+            {
+                return i;
+            }
+        }
+
+        // Si no encuentra el color, retornar -1 indicando que no está en el array
+        return -1;
     }
 }

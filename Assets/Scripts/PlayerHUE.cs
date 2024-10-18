@@ -15,6 +15,7 @@ public class PlayerHUE : MonoBehaviour
 
 
     [SerializeField] private LifeEvent lifeEvent;
+    
     public int Vida
     {
         get { return vida; }

@@ -609,6 +609,7 @@ MonoBehaviour:
   vidaText: {fileID: 2107937574}
   testButton: {fileID: 1326915045}
   player: {fileID: 430860084}
+  scoreEvent: {fileID: 11400000, guid: e8d043e59411e5742b6e86ac5227e911, type: 2}
 --- !u!1 &816007491
 GameObject:
   m_ObjectHideFlags: 0

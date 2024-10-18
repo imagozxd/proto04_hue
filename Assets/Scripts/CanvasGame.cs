@@ -8,9 +8,12 @@ public class CanvasGame : MonoBehaviour
     [SerializeField] private Text timeText;
     [SerializeField] private Text vidaText;
     [SerializeField] private Button testButton;
-    [SerializeField] private PlayerHUE player; // Referencia al jugador para obtener la vida
-    private float elapsedTime; // Tiempo transcurrido
-    private bool isTimerRunning; // Bandera para saber si el temporizador está corriendo
+    [SerializeField] private PlayerHUE player; 
+    private float elapsedTime; 
+    private bool isTimerRunning; 
+
+    [SerializeField] private ScoreEvent scoreEvent; 
+    private int score = 0; 
 
     private void Start()
     {
@@ -21,6 +24,10 @@ public class CanvasGame : MonoBehaviour
 
         UpdateTimeText();
         UpdateVidaText();
+
+        
+        score = 0;
+        scoreEvent.Raise(score); 
     }
 
     private void Update()
@@ -29,10 +36,20 @@ public class CanvasGame : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             UpdateTimeText();
+
+            
+            IncrementScore(1);
         }
 
         // Actualizar la vida en el texto
         UpdateVidaText();
+    }
+
+    // Función que incrementa el score y dispara el evento
+    private void IncrementScore(int amount)
+    {
+        score += amount;
+        scoreEvent.Raise(score); // Disparar el evento cuando se actualice el score
     }
 
     private void UpdateTimeText()
@@ -57,3 +74,4 @@ public class CanvasGame : MonoBehaviour
         SceneManager.LoadScene("FinalScene");
     }
 }
+

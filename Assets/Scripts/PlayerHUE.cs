@@ -31,8 +31,7 @@ public class PlayerHUE : MonoBehaviour
         // Ejemplo: Reducir vida si el jugador toca el suelo con fuerza (puedes cambiar esta lógica)
         if (isGrounded && rb.velocity.y < -10f)
         {
-            vida--;
-            Debug.Log("Vida del jugador: " + vida);
+            TakeDamage(1);  // Llama a la nueva función para reducir vida
         }
     }
 
@@ -59,6 +58,19 @@ public class PlayerHUE : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce); // Aplicar la fuerza de salto
                 jumpCount++;
             }
+        }
+    }
+
+    // Nueva función para reducir la vida del jugador
+    public void TakeDamage(int amount)
+    {
+        vida -= amount;
+        Debug.Log("Vida del jugador: " + vida);
+
+        if (vida <= 0)
+        {
+            // Aquí puedes manejar la lógica de la muerte del jugador
+            Debug.Log("El jugador ha muerto.");
         }
     }
 

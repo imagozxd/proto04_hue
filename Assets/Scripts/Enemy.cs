@@ -33,13 +33,13 @@ public class Enemy : MonoBehaviour
 
         if (background != null)
         {
-            
             backgroundRenderer = background.GetComponent<SpriteRenderer>();
             if (backgroundRenderer == null)
             {
                 Debug.LogError("SpriteRenderer no encontrado en el GameObject de fondo.");
             }
         }
+
         // Obtener referencia del GameController
         gameController = FindObjectOfType<GameController>();
 
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         {
             if (GetCurrentColorIndex() == gameController.GetBackgroundColorIndex())
             {
-                Debug.Log("el color del enemigo coincide con el del fondo, se desactiva.");
+                Debug.Log("El color del enemigo coincide con el del fondo, se desactiva.");
 
                 if (enemyPool != null)
                 {
@@ -69,16 +69,20 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-
-        //Debug.Log("color del enemy: " + GetCurrentColorIndex());
-        //Debug.Log("color de fondo: " + gameController.GetBackgroundColorIndex());
     }
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            // Intenta obtener el componente PlayerHUE del jugador
+            PlayerHUE player = other.GetComponent<PlayerHUE>();
+            if (player != null)
+            {
+                player.TakeDamage(1);  // Llama a la función para reducir la vida
+                Debug.Log("Impacto con el jugador, se le reduce 1 de vida.");
+            }
+
             if (enemyPool != null)
             {
                 enemyPool.ReturnEnemy(gameObject);

@@ -13,6 +13,8 @@ public class PlayerHUE : MonoBehaviour
     private int jumpCount = 0;        // Número de saltos realizados
     private bool isGrounded = false;  // Indica si el jugador está en el suelo
 
+
+    [SerializeField] private LifeEvent lifeEvent;
     public int Vida
     {
         get { return vida; }
@@ -21,6 +23,7 @@ public class PlayerHUE : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        lifeEvent.Raise(vida);
     }
 
     private void Update()
@@ -28,11 +31,11 @@ public class PlayerHUE : MonoBehaviour
         Move();
         Jump();
 
-        // Ejemplo: Reducir vida si el jugador toca el suelo con fuerza (puedes cambiar esta lógica)
-        if (isGrounded && rb.velocity.y < -10f)
-        {
-            TakeDamage(1);  // Llama a la nueva función para reducir vida
-        }
+        
+        //if (isGrounded && rb.velocity.y < -10f)
+        //{
+        //    TakeDamage(1);  // Llama a la nueva función para reducir vida
+        //}
     }
 
     private void Move()
@@ -66,10 +69,10 @@ public class PlayerHUE : MonoBehaviour
     {
         vida -= amount;
         Debug.Log("Vida del jugador: " + vida);
+        lifeEvent.Raise(vida);
 
         if (vida <= 0)
         {
-            // Aquí puedes manejar la lógica de la muerte del jugador
             Debug.Log("El jugador ha muerto.");
         }
     }

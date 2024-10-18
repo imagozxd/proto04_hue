@@ -254,6 +254,7 @@ MonoBehaviour:
   groundCheck: {fileID: 816007492}
   groundCheckDistance: 0.1
   vida: 3
+  lifeEvent: {fileID: 11400000, guid: 99cb7a2e0e7886e4f98f2cc6c3ca55b4, type: 2}
 --- !u!212 &430860085
 SpriteRenderer:
   m_ObjectHideFlags: 0
